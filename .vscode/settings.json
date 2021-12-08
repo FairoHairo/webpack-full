@@ -1,0 +1,28 @@
+{
+  "editor.cursorStyle": "block",
+  "files.autoSave": "onFocusChange",
+  // "editor.defaultFormatter": "dbaeumer.vscode-eslint",
+  "javascript.validate.enable": true,
+  "editor.formatOnSave": true,
+  "eslint.alwaysShowStatus": true,
+  "eslint.autoFixOnSave": true,
+  "[typescript]": {
+    "editor.formatOnSave": false,
+    "editor.insertSpaces": true
+  },
+  "[javascript]": {
+    "editor.formatOnSave": true,
+  },
+  "[javascriptreact]": {
+    "editor.formatOnSave": false,
+  },
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": true,
+    "source.fixAll.stylelint": true
+  },
+  // "[typescriptreact]": {
+  //   "editor.defaultFormatter": "esbenp.prettier-vscode"
+  // },
+  "javascript.format.insertSpaceAfterOpeningAndBeforeClosingNonemptyBraces": false,
+  "typescript.format.insertSpaceAfterOpeningAndBeforeClosingNonemptyBraces": false
+}

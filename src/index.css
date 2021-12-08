@@ -1,0 +1,25 @@
+@font-face {
+  font-family: 'MyFont';
+  src: url('./fonts/RedactedScript-Regular.ttf');
+  font-weight: 600;
+  font-style: normal;
+}
+html {
+  font-family: 'MyFont';
+}
+.center {
+  color: chartreuse;
+  text-align: center;
+  font-size: 28px;
+  position: relative;
+  margin-top: 50px;
+}
+img {
+  width: 100%;
+  max-width: 100px;
+  height: auto;
+}
+.icon {
+  text-align: center;
+  color: aliceblue;
+}

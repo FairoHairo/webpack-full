@@ -38,8 +38,8 @@
         "import/extensions": 0,
         "no-nested-ternary": ["off"],
         "no-unused-expressions": ["off"],
-        "object-curly-spacing": ["off"],
-        "object-curly-newline": ["error", { "minProperties": 6 }],
+        "object-curly-spacing": ["error", "always"],
+        "object-curly-newline": ["error", { "multiline": true }],
         "padded-blocks": ["off"],
         "react/state-in-constructor": ["off"],
         "react/jsx-props-no-spreading": ["off"],
@@ -65,7 +65,10 @@
         "consistent-return": ["off"],
         "default-case": ["off"],
         "react/function-component-definition": ["off"],
-        "quotes": [2, "single", { "avoidEscape": true }]
+        "quotes": [2, "single", { "avoidEscape": true }],
+        "semi": ["error", "always"],
+        "no-restricted-syntax":"off",
+        "@typescript-eslint/no-var-requires": "off"
     }
     ,
     "settings": {

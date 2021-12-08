@@ -1,19 +1,57 @@
-
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+
+const devMode = process.env.NODE_ENV !== 'production';
+
+const plugins = () => {
+  const result = [
+    new HtmlWebpackPlugin({ template: path.join(__dirname, 'src', 'index.html'), }),
+  ];
+  if (devMode) {
+    result.push(new MiniCssExtractPlugin({
+      filename: devMode ? '[name].css' : '[name].[contenthash].css',
+      chunkFilename: devMode ? '[id].css' : '[id].[contenthash].css',
+    }));
+  }
+  return result;
+};
+
+const cssLoader = (extra) => {
+  const firstLoader = devMode ? 'style-loader' : MiniCssExtractPlugin.loader;
+  const cssloaders = [firstLoader, 'css-loader'];
+  for (const loader of extra) {
+    cssloaders.push(loader);
+  }
+  return cssloaders;
+};
 
 module.exports = {
-  entry: './src/index.tsx',
-  output: { path: path.join(__dirname, 'build'), filename: 'index.bundle.js' },
   mode: process.env.NODE_ENV || 'development',
-  resolve: {
-    extensions: ['.tsx', '.ts', '.js'],
+  entry: {
+    page: {
+      import: './src/index.tsx',
+      dependOn: 'react-vendors'
+    },
+    'react-vendors': ['react', 'react-dom']
   },
+  output: {
+    path: path.join(__dirname, 'build'),
+    filename: '[name].bundle.js',
+    clean: true,
+    asyncChunks: true,
+    chunkFilename: '[id].js'
+  },
+
+  resolve: { extensions: ['.tsx', '.ts', '.js'], },
+
   devServer: {
-    compress: true,
+    hot: true,
     port: 9000,
+    static: './dist'
   },
   devtool: 'inline-source-map',
+  plugins: plugins(),
   module: {
     rules: [
       {
@@ -28,17 +66,26 @@ module.exports = {
       },
       {
         test: /\.(css|scss)$/,
-        use: ['style-loader', 'css-loader', 'sass-loader'],
+        use: cssLoader(['sass-loader']),
       },
       {
         test: /\.(jpg|jpeg|png|gif|mp3|svg)$/,
-        use: ['file-loader'],
+        type: 'asset/resource'
       },
     ],
   },
-  plugins: [
-    new HtmlWebpackPlugin({
-      template: path.join(__dirname, 'src', 'index.html'),
-    }),
-  ],
+
+  optimization: {
+    runtimeChunk: 'single',
+    splitChunks: {
+      cacheGroups: {
+        vendor: {
+          test: /[\\/]node_modules[\\/]/,
+          name: 'vendors',
+          chunks: 'all',
+        },
+      },
+    },
+
+  }
 };
