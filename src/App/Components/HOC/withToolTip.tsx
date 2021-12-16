@@ -1,7 +1,9 @@
 import React, { ComponentType, ReactNode, useState } from 'react';
+import './style.scss';
 
 export interface WithToolTip {
   tooltip: string;
+  children?: ReactNode;
 }
 export type OuterProps<P> = Omit<P, 'tooltip'| 'render'>
 
@@ -10,7 +12,7 @@ export const withToolTip = <P extends WithToolTip> (
 ) => {
 
   const InnerComponent = ({ tooltip, render, ...otherProps }: P & {
-    render: (p: OuterProps<P>) => ReactNode}) => {
+    render: (p: OuterProps<P>) => JSX.Element}) => {
     const [open, setIsOpen] = useState(false);
     return (
       <div className="tooltip">
