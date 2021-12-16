@@ -3,12 +3,12 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 const devMode = process.env.NODE_ENV !== 'production';
-
+console.log(`Develop: ${devMode}`);
 const plugins = () => {
   const result = [
     new HtmlWebpackPlugin({ template: path.join(__dirname, 'src', 'index.html'), }),
   ];
-  if (devMode) {
+  if (!devMode) {
     result.push(new MiniCssExtractPlugin({
       filename: devMode ? '[name].css' : '[name].[contenthash].css',
       chunkFilename: devMode ? '[id].css' : '[id].[contenthash].css',
@@ -28,13 +28,7 @@ const cssLoader = (extra) => {
 
 module.exports = {
   mode: process.env.NODE_ENV || 'development',
-  entry: {
-    page: {
-      import: './src/index.tsx',
-      dependOn: 'react-vendors'
-    },
-    'react-vendors': ['react', 'react-dom']
-  },
+  entry: './src/index.tsx',
   output: {
     path: path.join(__dirname, 'build'),
     filename: '[name].bundle.js',
@@ -77,15 +71,6 @@ module.exports = {
 
   optimization: {
     runtimeChunk: 'single',
-    splitChunks: {
-      cacheGroups: {
-        vendor: {
-          test: /[\\/]node_modules[\\/]/,
-          name: 'vendors',
-          chunks: 'all',
-        },
-      },
-    },
-
+    splitChunks: { chunks: 'all' }
   }
 };
